@@ -11,9 +11,13 @@ conectarDB();
 //puerto de la app
 const PORT = process.env.PORT || 4000;
 
-app.get('/', (req, res) => {
-  res.send('hola tiwi');
-});
+//importar rutas
+app.use('/api/usuarios', require('./routes/usuarios'));
+
+
+// app.get('/', (req, res) => {
+//   res.send('hola tiwi'); comprueba conexion
+//});
 
 //encender el server
 app.listen(PORT, () => {
