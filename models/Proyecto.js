@@ -6,4 +6,4 @@ const ProyectoSchema = mongoose.Schema({
   creado: { type: Date, default: Date.now() },
 });
 
-module.exports = mongoose.model('Proyeto', ProyectoSchema);
+module.exports = mongoose.model('Proyecto', ProyectoSchema);
