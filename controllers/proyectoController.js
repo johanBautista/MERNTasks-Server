@@ -30,14 +30,53 @@ exports.obtenerProyecto = async (req, res) => {
       creado: -1,
     });
     res.json({ proyectos });
-    console.log('uno:', req.usuario);
-    console.log('dos:', req.body);
+    // console.log('uno:', req.usuario);
   } catch (error) {
     console.log(error);
     res.status(500).send('Hubo un error');
   }
 };
 
-exports.actualizarProyecto = async (req, res) => {};
+//actualiza un proyecto
+exports.actualizarProyecto = async (req, res) => {
+  //revisar si hay errores
+  const errores = validationResult(req);
+  if (!errores.isEmpty()) {
+    return res.status(400).json({ errores: errores.array() });
+  }
+
+  //extraer info del proyecto
+  const { nombre } = req.body;
+  const nuevoProyecto = {};
+
+  if (nombre) {
+    nuevoProyecto.nombre = nombre;
+  }
+
+  try {
+    //revisar el id
+    // console.log('dos:', req.params.id);
+    let proyecto = await Proyecto.findById(req.params.id);
+
+    //revisar si existe o no el proyecto
+    if (!proyecto) {
+      return res.status(404).json({ msg: 'Proyecto no encontrado' });
+    }
+    //verificar quien lo creo
+    if (proyecto.creador.toString() !== req.usuario.id) {
+      return res.status(401).json({ msg: 'No Autorizado' });
+    }
+    //actualizar
+    proyecto = await Proyecto.findByIdAndUpdate(
+      { _id: req.params.id },
+      { $set: nuevoProyecto },
+      { new: true },
+    );
+    res.json({ proyecto });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send('Hubo un error en el servidor');
+  }
+};
 
 exports.eliminarProyecto = async (req, res) => {};

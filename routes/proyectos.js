@@ -20,6 +20,7 @@ router.get('/', auth, proyectoController.obtenerProyecto);
 // actualizar proyectos
 router.put(
   '/:id',
+  auth,
   [check('nombre', 'El nombre del proyecto es obligtorio').not().isEmpty()],
   proyectoController.actualizarProyecto,
 );
