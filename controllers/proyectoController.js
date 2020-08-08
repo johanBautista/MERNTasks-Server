@@ -1,10 +1,11 @@
 const Proyecto = require('../models/Proyecto');
-const { validationResult } = require('express-validator');
 
 exports.crearProyecto = async (req, res) => {
   try {
     // crear nuevo proyecto
     const proyecto = new Proyecto(req.body);
+    //guardar el creador via jwt
+    proyecto.creador = req.usuario.id;
     //guardar nuevo proyecto
     proyecto.save();
     //mensaje de confirmacion
