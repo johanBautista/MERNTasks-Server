@@ -1,12 +1,16 @@
 console.log('runr run');
 const express = require('express');
 const conectarDB = require('./config/db');
+const cors = require('cors');
 
 //crear el server
 const app = express();
 
 //conectar a la DB
 conectarDB();
+
+//habilitar cors
+app.use(cors());
 
 //habilitar express.json leer data
 app.use(express.json({ extended: true }));
