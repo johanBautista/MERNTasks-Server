@@ -25,6 +25,6 @@ app.use('/api/proyectos', require('./routes/proyectos'));
 app.use('/api/tareas', require('./routes/tareas'));
 
 //encender el server
-app.listen(PORT, () => {
-  console.log(`el server ${PORT} esta ok`);
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`el server ${PORT} esta ok, xD`);
 });
